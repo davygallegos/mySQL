@@ -1,13 +1,13 @@
-DROP DATABASE IF EXISTS bamazon;
-CREATE DATABASE bamazon;
+DROP DATABASE IF EXISTS bamazonDB;
+CREATE DATABASE bamazonDB;
 
-USE bamazon;
+USE bamazonDB;
 
 CREATE TABLE products(
 item_id INT NOT NULL AUTO_INCREMENT,
-product_name VARCHAR(100) NOT NULL,
-department_name VARCHAR(100) NOT NULL,
-price INT default 0,
+product_name VARCHAR(100) NULL,
+department_name VARCHAR(100) NULL,
+price DECIMAL (6,2) default 0,
 stock_quantity INT default 0,
   PRIMARY KEY (item_id)
 );
@@ -15,12 +15,30 @@ stock_quantity INT default 0,
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Altra Shoe", "Sporting", 100, 10);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Bow", "Sporting", 50, 15);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Desert Eagle", "Sporting", 5, 1000);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Snot Hanky", "Survival", 200, 25);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Nipple bandaids", "Survival", 1, 7);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Pedialyte", "Survival", 2, 20);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Razer Phone", "Entertainment", 500, 79);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Kindle Paperwrite", "Entertainment", 100, 1000);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Count Chocula", "Food", 3, 5);
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Gummy Bears", "Food", 2, 10);
