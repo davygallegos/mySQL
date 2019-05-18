@@ -68,8 +68,8 @@ function start() {
                 }
                 if (chosenItem.stock_quantity > answer.purchaseQuantity) {
                     var updatedQuantity = chosenItem.stock_quantity - parseInt(answer.purchaseQuantity)
+
                     console.log("this is updated quantity " + updatedQuantity)
-                    // bid was high enough, so update db, let the user know, and start over
                     connection.query(
                         "UPDATE products SET ? WHERE ?",
                         [
@@ -77,24 +77,14 @@ function start() {
                                 stock_quantity: updatedQuantity
                             },
                             {
-                                item_id: chosenItem.id
+                                item_id: chosenItem.item_id
                             }
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log("Your purchase was not to shabby");
+                            console.log("Your purchase of " + answer.purchaseQuantity + (" ") + chosenItem.product_name + " has been processed!");
                         }
 
-//                 connection.query(
-//                     console.log(product_name))
-
-//                 if (answer.purchaseQuantity >= stock_quantity) {
-//                     console.log("purchase item")
-//                     // purchaseItem();
-
-//                 }
-//                 else{
-// console.log("not enough goods!")
                     )}
             })
     });
