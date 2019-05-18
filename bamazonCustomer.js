@@ -26,6 +26,8 @@ connection.connect(function (err) {
     console.log('connected as id ' + connection.threadId);
     start();
 });
+
+
 function start() {
     // query the database for all items being auctioned
     connection.query("SELECT * FROM products", function (err, results) {
@@ -37,35 +39,63 @@ function start() {
                 {
                     name: "itemID",
                     type: "list",
-                    choices: function () {
-                        var choiceArray = [];
-                        for (var i = 0; i < results.length; i++) {
-                            choiceArray.push(results[i].item_id);
-                        }
-                        return choiceArray;
-                    },                
                     message: "What product ID would you like to buy?",
+                    choices:
+                        function () {
+                            var choiceArray = [];
+                            for (var i = 0; i < results.length; i++) {
+                                choiceArray.push(results[i].item_id);
+                            }
+                            return choiceArray;
+                        },
                 },
                 {
-                    name: "stockQuantity",
+                    name: "purchaseQuantity",
                     type: "input",
                     message: "How many units of the product would you like to buy?",
                 },
-                
-                
-            ])
-            .then(function(answer){
-                connection.query(
-                    console.log(product_name))
 
-                if (answer.stockQuantity >= stock_quantity) {
-                    console.log("purchase item")
-                    // purchaseItem();
-                    
+
+            ])
+            .then(function (answer) {
+
+                var chosenItem;
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].item_id === answer.itemID) {
+                        chosenItem = results[i];
+                        console.log(chosenItem)
+                    }
                 }
-                else{
-console.log("not enough goods!")
-                }
+                if (chosenItem.stock_quantity > answer.purchaseQuantity) {
+                    var updatedQuantity = chosenItem.stock_quantity - parseInt(answer.purchaseQuantity)
+                    console.log("this is updated quantity " + updatedQuantity)
+                    // bid was high enough, so update db, let the user know, and start over
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: updatedQuantity
+                            },
+                            {
+                                item_id: chosenItem.id
+                            }
+                        ],
+                        function (error) {
+                            if (error) throw err;
+                            console.log("Your purchase was not to shabby");
+                        }
+
+//                 connection.query(
+//                     console.log(product_name))
+
+//                 if (answer.purchaseQuantity >= stock_quantity) {
+//                     console.log("purchase item")
+//                     // purchaseItem();
+
+//                 }
+//                 else{
+// console.log("not enough goods!")
+                    )}
             })
     });
 }

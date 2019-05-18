@@ -28,3 +28,5 @@ VALUES ("Count Chocula", "Food", 3, 5);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Gummy Bears", "Food", 2, 10);
+
+SELECT * FROM products;
